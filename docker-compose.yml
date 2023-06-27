@@ -1,0 +1,41 @@
+version: '2'
+services:
+  backend:
+    container_name: ${APP_NAME}-backend
+    restart: always
+    build: 
+      context: ./backend
+      dockerfile: node.dockerfile
+    depends_on:
+     - mysql
+    expose:
+     - 3000
+    volumes:
+      - './backend/:/usr/backend'
+    ports:
+      - "3000:3000"
+    env_file:
+     - ./backend/.env
+    command: npm run start:watch
+  frontend:
+    container_name: ${APP_NAME}-frontend
+    restart: always
+    build: 
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - './frontend/:/usr/frontend'
+    env_file:
+      - ./frontend/.env
+    command: npm run serve
+  mysql:
+    container_name: ${APP_NAME}-database
+    build:
+      context: ./backend
+      dockerfile: "./mysql.dockerfile"
+    env_file:
+      - ./backend/.env
