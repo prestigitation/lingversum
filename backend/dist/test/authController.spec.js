@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-let server = require('../mocks/server.mock');
+let server = require("../index");
 const falso_1 = require("@ngneat/falso");
 const mocha_1 = require("mocha");
 const chai_1 = require("chai");

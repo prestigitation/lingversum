@@ -1,11 +1,22 @@
-import { createApp } from "vue";
 import App from "./LayoutContainer.vue";
 import router from "./router";
+
+import { createApp, h } from "vue";
 import { createPinia } from "pinia";
+import { install } from "vexip-ui";
 
 import "./assets/tailwind.css";
-import "keen-ui/dist/keen-ui.css";
+
+import "vexip-ui/css/index.css";
+import "./styles/vexip.rewrite.scss";
+import { enUSLocale } from "vexip-ui";
 
 const pinia = createPinia();
 
-createApp(App).use(pinia).use(router).mount("#app");
+createApp({ render: () => h(App) })
+  .use(pinia)
+  .use(install, {
+    locale: enUSLocale(),
+  })
+  .use(router)
+  .mount("#app");

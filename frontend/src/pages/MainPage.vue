@@ -9,22 +9,19 @@
       We provide the excellent service to make the cultural and language
       exchange comfortable and accessible to you.
     </p>
-    <ui-button class="mt-6">
-      <template v-if="store.user.token">
-        <router-link to="/register"> Continue communicating! </router-link>
+    <Button class="mt-6">
+      <template v-if="false">
+        <RouterLink to="/register"> Continue communicating! </RouterLink>
       </template>
       <template v-else>
-        <router-link to="/register"> Get Started </router-link>
+        <RouterLink to="/register"> Get Started </RouterLink>
       </template>
-    </ui-button>
+    </Button>
   </div>
 </template>
 <script lang="ts" setup>
 import { APP_NAME } from "@/types/constants/app.constants";
 
-import { useAuthStore } from "../store/auth/useAuthStore";
-
-import UiButton from "keen-ui/src/UiButton.vue";
-
-const store = useAuthStore();
+import { Button } from "vexip-ui";
+import { RouterLink } from "vue-router";
 </script>

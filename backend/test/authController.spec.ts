@@ -1,4 +1,4 @@
-let server = require('../mocks/server.mock');
+let server = require("../index");
 
 import { randEmail, randPassword, randUserName } from "@ngneat/falso";
 import { test } from "mocha"

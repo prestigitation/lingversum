@@ -1,20 +1,21 @@
 <template>
   <header class="layout-header">
-    <router-link to="/">
+    <RouterLink to="/">
       <div class="text-2xl">{{ APP_NAME }}</div>
-    </router-link>
+    </RouterLink>
     <nav class="flex gap-4">
-      <router-link to="/login">
-        <ui-button color="primary">Login</ui-button>
-      </router-link>
-      <router-link to="/register">
-        <ui-button color="green">Register</ui-button>
-      </router-link>
+      <RouterLink to="/login">
+        <Button>Login</Button>
+      </RouterLink>
+      <RouterLink to="/register">
+        <Button>Register</Button>
+      </RouterLink>
     </nav>
   </header>
 </template>
 <script lang="ts" setup>
-import UiButton from "keen-ui/src/UiButton.vue";
+import { RouterLink } from "vue-router";
+import { Button } from "vexip-ui";
 import { APP_NAME } from "@/types/constants/app.constants";
 </script>
 <style lang="scss" scoped>

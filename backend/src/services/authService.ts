@@ -12,8 +12,8 @@ export default class authService implements authServiceInterface {
         this.jwt = require('jsonwebtoken');
     }
 
-    generateToken(info: object) {
-        return this.jwt.sign(info, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+    generateToken(info: object, expiresIn: string = "1800s") {
+        return this.jwt.sign(info, process.env.TOKEN_SECRET, { expiresIn });
     }
 
     matchHash(rawString: string, hashedString: string): boolean {
