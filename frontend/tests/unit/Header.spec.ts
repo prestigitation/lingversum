@@ -4,20 +4,8 @@ import LayoutHeader from "@/components/ui/LayoutHeader.vue";
 import Vue from "vue";
 import routes from "@/router/routes";
 import { createRouter, createWebHistory } from "vue-router";
-let router;
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+let router: any;
+
 beforeEach(async () => {
   router = createRouter({
     history: createWebHistory(),
@@ -31,7 +19,11 @@ describe("App Header", () => {
   let wrapper: VueWrapper<Vue.ComponentPublicInstance> | undefined | null;
 
   const createComponent = () => {
-    wrapper = shallowMount(LayoutHeader);
+    wrapper = mount(LayoutHeader, {
+      global: {
+        plugins: [router],
+      },
+    });
   };
 
   afterEach(() => {

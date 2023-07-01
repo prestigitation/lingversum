@@ -1,22 +1,10 @@
-import { VueWrapper, shallowMount } from "@vue/test-utils";
+import { VueWrapper, mount } from "@vue/test-utils";
 import MainPage from "@/pages/MainPage.vue";
 import Vue from "vue";
 import routes from "@/router/routes";
 import { createRouter, createWebHistory } from "vue-router";
-let router;
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+let router: any;
+
 beforeEach(async () => {
   router = createRouter({
     history: createWebHistory(),
@@ -30,11 +18,11 @@ describe("App Header", () => {
   let wrapper: VueWrapper<Vue.ComponentPublicInstance> | undefined | null;
 
   const createComponent = () => {
-    wrapper = shallowMount(MainPage);
-  };
-
-  const createComponentWithMockedAuthenticatedState = () => {
-    wrapper = shallowMount(MainPage);
+    wrapper = mount(MainPage, {
+      global: {
+        plugins: [router],
+      },
+    });
   };
 
   afterEach(() => {
@@ -57,10 +45,12 @@ describe("App Header", () => {
   });
 
   it("renders the button in the right order", () => {
+    createComponent();
     expect(wrapper?.find("h1 + p + button")).toBeTruthy();
   });
 
   it("has the text which proceeds us to start", () => {
-    expect(wrapper?.find("h1 + p + button").text()).toContain("Get started");
+    createComponent();
+    expect(wrapper?.find("h1 + p + button").text()).toContain("Get Started");
   });
 });
