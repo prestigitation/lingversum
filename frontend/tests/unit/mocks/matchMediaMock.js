@@ -2,7 +2,7 @@ import jest from "jest";
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: ((query) => ({
+  value: (query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -11,5 +11,5 @@ Object.defineProperty(window, "matchMedia", {
     addEventListener: () => {},
     removeEventListener: () => {},
     dispatchEvent: () => {},
-  })),
+  }),
 });

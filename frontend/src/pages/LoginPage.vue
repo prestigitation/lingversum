@@ -1,26 +1,71 @@
 <template>
   <div class="h-full flex flex-col items-center justify-center">
-    <span class="text-xl mb-8 font-bold">Welcome back to {{ APP_NAME }}!</span>
-    <form class="form_wrapper">
-      <Input v-model="email">E-mail</Input>
-      <Input v-model="password">Password</Input>
-    </form>
-    <span class="mb-4 mt-8">
-      <span>Not yet registered?&nbsp;</span>
-      <RouterLink to="/register" class="text-blue-500">Register!</RouterLink>
-    </span>
-    <Button color="primary">Sign In</Button>
+    <span class="text-xl mb-4 font-bold">Welcome back to {{ APP_NAME }}!</span>
+    <Form
+      class="flex !flex-col w-min !items-center"
+      :validation-schema="validationSchema"
+      @submit="onSubmit"
+      @invalid-submit="useInvalidInputHandler"
+    >
+      <div class="form_field--wrapper">
+        <Field
+          placeholder="E-mail"
+          class="form-field"
+          name="email"
+          v-bind="email"
+        />
+        <FormErrorMessage name="email" />
+      </div>
+
+      <div class="form_field--wrapper">
+        <Field
+          placeholder="Password"
+          class="form-field"
+          name="password"
+          v-bind="password"
+        />
+        <FormErrorMessage name="password" />
+      </div>
+
+      <div class="mb-4 mt-8">
+        <span>Not yet registered?&nbsp;</span>
+        <RouterLink to="/register" class="text-blue-500">Register!</RouterLink>
+      </div>
+      <Button button-type="submit" color="primary">Sign In</Button>
+    </Form>
   </div>
 </template>
 <script lang="ts" setup>
 import { APP_NAME } from "@/types/constants/app.constants";
-
-import { ref } from "vue";
-
 import { Input, Button } from "vexip-ui";
-import { RouterLink } from "vue-router";
+import { RouterLink, routerKey, useRouter } from "vue-router";
+import { toTypedSchema } from "@vee-validate/zod";
+import { z } from "zod";
+import { Field, useForm, Form } from "vee-validate";
+import { useInstance } from "../composables/useAxiosClient";
+import useNotications from "../composables/useNotifications";
+import FormErrorMessage from "@/components/ui/FormErrorMessage.vue";
 
-const email = ref("");
-const password = ref("");
+const { useSuccessHandler, useInvalidInputHandler } = useNotications();
+const axios = useInstance();
+
+const validationSchema = toTypedSchema(
+  z.object({
+    email: z.string().email().nonempty(),
+    password: z.string().nonempty(),
+  })
+);
+
+const form = useForm({
+  validationSchema,
+});
+const defineInputBinds = form.defineComponentBinds;
+
+const email = defineInputBinds("email");
+const password = defineInputBinds("password");
+
+async function onSubmit(values: any) {
+  await axios.post("login", { email: values.email, password: values.password });
+}
 </script>
 <style lang="scss" scoped src="../styles/auth.scss"></style>

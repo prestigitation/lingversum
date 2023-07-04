@@ -1,16 +1,17 @@
 import { Response, Request } from "express";
 import Container, { Service } from "typedi";
-import bcrypt from "bcrypt";
 import userRegisterValidator from "../validators/user/userRegisterValidator";
 import User from "../../models/user.model";
 import authService from "../services/authService";
 import userLoginValidator from "../validators/user/userLoginValidator";
 import authRepository from "../repositories/authRepository";
+import baseController from "./baseController";
 
 
 @Service()
-export default class authController {
+export default class authController extends baseController {
     async login(request: Request, response: Response) {
+
         const service = Container.get(authService)
         const {email, password, name} = request.body;
 
@@ -28,34 +29,38 @@ export default class authController {
                             email
                         }))
                     } else {
-                        return response.status(403).send(request.t("USER.INCORREСT_PASSWORD"))
+                        return response.status(403).send({message: this.getI18N()?.__("USER.INCORREСT_PASSWORD")});
                     }
                 } else {
-                    return response.status(400).send(request.t("USER.NOT_FOUND"))
+                    return response.status(400).send({message: this.getI18N()?.__("USER.NOT_FOUND")});
                 }
             } else {
-                return response.status(422).send(request.t("USER.NOT_VALIDATED"))
+                return response.status(422).send({message: this.getI18N()?.__("USER.NOT_VALIDATED")});
             }
     }
 
     async register(request: Request, response: Response) {
         const {email, password, name} = request.body
         const repository = new authRepository();
-        if(await User.findOne({
+        await User.findOne({
             where: {
                 email
             }
-        })) {
-            return response.status(409).send(request.t("USER.ALREADY_EXISTS"));
-        } else {
-            let validator = userRegisterValidator(request.body)
-            if(validator.success) {
-                await repository.createUser({name, email, password})
-
-                return response.sendStatus(201);
+        }).then(async (user) => {
+            if(user) {
+                return response.status(409).send(this.getI18N()?.__("USER.ALREADY_EXISTS"));
             } else {
-                return response.status(422).send(request.t("USER.NOT_VALIDATED"))
+                let validator = userRegisterValidator(request.body)
+                if(validator.success) {
+                    await repository.createUser({name, email, password})
+    
+                    return response.sendStatus(201);
+                } else {
+                    return response.status(422).send({message: this.getI18N()?.__("USER.NOT_VALIDATED")})
+                }
             }
-        }
+        }).catch((e) => {
+            return response.status(500).send({message: this.getI18N()?.__("ERROR.SERVER_ERROR")});
+        })
     } 
 }

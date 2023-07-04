@@ -4,4 +4,7 @@ declare module 'express' {
     interface Request {
       t: TFunction;
     }
+    interface Response {
+      __ : any
+    }
 }

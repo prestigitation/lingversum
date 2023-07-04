@@ -47,10 +47,8 @@ const user_model_1 = __importDefault(require("../../models/user.model"));
 const authService_1 = __importDefault(require("../services/authService"));
 const userLoginValidator_1 = __importDefault(require("../validators/user/userLoginValidator"));
 const authRepository_1 = __importDefault(require("../repositories/authRepository"));
-const baseController_1 = __importDefault(require("./baseController"));
-let authController = class authController extends baseController_1.default {
+let authController = class authController {
     login(request, response) {
-        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             const service = typedi_1.default.get(authService_1.default);
             const { email, password, name } = request.body;
@@ -69,15 +67,15 @@ let authController = class authController extends baseController_1.default {
                         }));
                     }
                     else {
-                        return response.status(403).send({ message: (_a = this.getI18N()) === null || _a === void 0 ? void 0 : _a.__("USER.INCORREСT_PASSWORD") });
+                        return response.status(403).send(request.t("USER.INCORREСT_PASSWORD"));
                     }
                 }
                 else {
-                    return response.status(400).send({ message: (_b = this.getI18N()) === null || _b === void 0 ? void 0 : _b.__("USER.NOT_FOUND") });
+                    return response.status(400).send(request.t("USER.NOT_FOUND"));
                 }
             }
             else {
-                return response.status(422).send({ message: (_c = this.getI18N()) === null || _c === void 0 ? void 0 : _c.__("USER.NOT_VALIDATED") });
+                return response.status(422).send(request.t("USER.NOT_VALIDATED"));
             }
         });
     }
@@ -90,9 +88,8 @@ let authController = class authController extends baseController_1.default {
                     email
                 }
             }).then((user) => __awaiter(this, void 0, void 0, function* () {
-                var _a, _b;
                 if (user) {
-                    return response.status(409).send((_a = this.getI18N()) === null || _a === void 0 ? void 0 : _a.__("USER.ALREADY_EXISTS"));
+                    return response.status(409).send(request.t("USER.ALREADY_EXISTS"));
                 }
                 else {
                     let validator = (0, userRegisterValidator_1.default)(request.body);
@@ -101,12 +98,11 @@ let authController = class authController extends baseController_1.default {
                         return response.sendStatus(201);
                     }
                     else {
-                        return response.status(422).send({ message: (_b = this.getI18N()) === null || _b === void 0 ? void 0 : _b.__("USER.NOT_VALIDATED") });
+                        return response.status(422).send(request.t("USER.NOT_VALIDATED"));
                     }
                 }
             })).catch((e) => {
-                var _a;
-                return response.status(500).send({ message: (_a = this.getI18N()) === null || _a === void 0 ? void 0 : _a.__("ERROR.SERVER_ERROR") });
+                return response.status(500).send(request.t("ERROR.SERVER_ERROR"));
             });
         });
     }

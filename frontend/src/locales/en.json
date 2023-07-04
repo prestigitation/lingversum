@@ -1,0 +1,21 @@
+{
+    "USER": {
+        "LOGIN": {},
+        "REGISTER": {
+            "SUCCESS": "You have been registered successfully!",
+            "FAIL": "We couldn`t register your account. Please check your credentials or try again"
+        }
+    },
+    "SUCCESS": {
+        "BASE": {
+            "TITLE": "Success"
+        }
+    },
+    "ERROR": {
+        "BASE": {
+            "TITLE": "Error"
+        },
+        "INVALID_INPUT": "The data you entered is invalid. Please check your credentials and match it to our rules!",
+        "SERVER_ERROR": "Sorry, there was an error on the server. Please try again"
+    }
+}

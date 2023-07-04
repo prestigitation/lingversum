@@ -1423,6 +1423,11 @@
   "resolved" "https://registry.npmjs.org/@juggle/resize-observer/-/resize-observer-3.4.0.tgz"
   "version" "3.4.0"
 
+"@kyvg/vue3-notification@^2.9.1":
+  "integrity" "sha512-FsY8g25tQetr3etnarxHtCeNFKssH8sheFu13LyL2JJmOOel437QqKV5n4RBDDDTIo55iKgIVYXeojliXYdEhw=="
+  "resolved" "https://registry.npmjs.org/@kyvg/vue3-notification/-/vue3-notification-2.9.1.tgz"
+  "version" "2.9.1"
+
 "@leichtgewicht/ip-codec@^2.0.1":
   "integrity" "sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A=="
   "resolved" "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"
@@ -1938,6 +1943,15 @@
   dependencies:
     "@typescript-eslint/types" "5.59.11"
     "eslint-visitor-keys" "^3.3.0"
+
+"@vee-validate/zod@^4.10.3":
+  "integrity" "sha512-TENTShnV2QZdIV9aLrRqj6IMexUPom4KAuU4DjirEaVPsWr0sFqr9TWtS1wzZ5e14xutwWft4ssN8E6V8+fi3A=="
+  "resolved" "https://registry.npmjs.org/@vee-validate/zod/-/zod-4.10.3.tgz"
+  "version" "4.10.3"
+  dependencies:
+    "type-fest" "^3.12.0"
+    "vee-validate" "^4.10.3"
+    "zod" "^3.21.4"
 
 "@vexip-ui/bem-helper@~1.0.0":
   "integrity" "sha512-pGDKkbJap4hdnd+8YoIAe7NkpOrRkjcfBv4ZdN23wnvYIq2zvY3ht+vmUUx1ZjVWpQTLshOEeIUXBF0LMiKCQA=="
@@ -6749,6 +6763,11 @@
   "resolved" "https://registry.npmjs.org/normalize-url/-/normalize-url-6.1.0.tgz"
   "version" "6.1.0"
 
+"notivue@^0.9.4":
+  "integrity" "sha512-6F2Al1h6JPR3/HsPUHtbm4BuquWu+9Rxkd5ZyOMY7zV64hujFKtyr5VM8nZzGfX9uwSQ3VMCNkpnwLoE2wu49w=="
+  "resolved" "https://registry.npmjs.org/notivue/-/notivue-0.9.4.tgz"
+  "version" "0.9.4"
+
 "npm-run-path@^2.0.0":
   "integrity" "sha512-lJxZYlT4DW/bRUtFh1MQIWqmLwQfAxnqWG4HhEdjMlkrJYnJn0Jrr2u3mgxqaWsdiBc76TYkTG/mhrnYTuzfHw=="
   "resolved" "https://registry.npmjs.org/npm-run-path/-/npm-run-path-2.0.2.tgz"
@@ -8831,6 +8850,11 @@
   "resolved" "https://registry.npmjs.org/type-fest/-/type-fest-0.8.1.tgz"
   "version" "0.8.1"
 
+"type-fest@^3.12.0":
+  "integrity" "sha512-qj9wWsnFvVEMUDbESiilKeXeHL7FwwiFcogfhfyjmvT968RXSvnl23f1JOClTHYItsi7o501C/7qVllscUP3oA=="
+  "resolved" "https://registry.npmjs.org/type-fest/-/type-fest-3.12.0.tgz"
+  "version" "3.12.0"
+
 "type-is@~1.6.18":
   "integrity" "sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g=="
   "resolved" "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz"
@@ -8969,6 +8993,14 @@
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
 
+"vee-validate@^4.10.3":
+  "integrity" "sha512-JDEpP765Hg5bLJBBbaYutnmiKXh4YX4Jz1FKIBp2Fw5PiuL8ULdZSuJZNbfvbA3ClMV+aJYWIlzA8iLyWGq+fQ=="
+  "resolved" "https://registry.npmjs.org/vee-validate/-/vee-validate-4.10.3.tgz"
+  "version" "4.10.3"
+  dependencies:
+    "@vue/devtools-api" "^6.5.0"
+    "type-fest" "^3.12.0"
+
 "verror@1.10.0":
   "integrity" "sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw=="
   "resolved" "https://registry.npmjs.org/verror/-/verror-1.10.0.tgz"
@@ -9023,6 +9055,11 @@
   "resolved" "https://registry.npmjs.org/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz"
   "version" "2.3.4"
 
+"vue-i18n@^8.28.2":
+  "integrity" "sha512-C5GZjs1tYlAqjwymaaCPDjCyGo10ajUphiwA922jKt9n7KPpqR7oM1PCwYzhB/E7+nT3wfdG3oRre5raIT1rKA=="
+  "resolved" "https://registry.npmjs.org/vue-i18n/-/vue-i18n-8.28.2.tgz"
+  "version" "8.28.2"
+
 "vue-loader@^17.0.0":
   "integrity" "sha512-aqNvKJvnz2A/6VWeJZodAo8XLoAlVwBv+2Z6dama+LHsAF+P/xijQ+OfWrxIs0wcGSJduvdzvTuATzXbNKkpiw=="
   "resolved" "https://registry.npmjs.org/vue-loader/-/vue-loader-17.2.2.tgz"
@@ -9052,7 +9089,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2 || ^3.2.13", "vue@^2.6.14 || ^3.3.0", "vue@^3.0.0-0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.25", "vue@3.3.4":
+"vue@*", "vue@^2 || ^3.2.13", "vue@^2.6.14 || ^3.3.0", "vue@^3.0.0", "vue@^3.0.0-0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.25", "vue@^3.3.4", "vue@3.3.4":
   "integrity" "sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"
   "version" "3.3.4"
@@ -9450,3 +9487,8 @@
     "is-ci" "^1.0.10"
     "normalize-path" "^1.0.0"
     "strip-indent" "^2.0.0"
+
+"zod@^3.21.4":
+  "integrity" "sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw=="
+  "resolved" "https://registry.npmjs.org/zod/-/zod-3.21.4.tgz"
+  "version" "3.21.4"

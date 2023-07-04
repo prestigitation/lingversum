@@ -3,7 +3,7 @@
     "username": "myuser",
     "password": "mypassword",
     "database": "mydatabase",
-    "host": "backend-mysql-1",
+    "host": "lingversum-database",
     "dialect": "mysql"
   },
   "test": {

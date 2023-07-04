@@ -31,7 +31,7 @@ let sequelizeConnectionAdapter = class sequelizeConnectionAdapter {
     connect() {
         if (!this.getInstance()) {
             this.setInstance(new sequelize_1.Sequelize("mydatabase", "myuser", "mypassword", {
-                host: "backend-mysql-1",
+                host: "lingversum-database",
                 dialect: "mysql"
             }));
         }

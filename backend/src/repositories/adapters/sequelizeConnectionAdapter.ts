@@ -10,7 +10,7 @@ export default class sequelizeConnectionAdapter implements databaseConnectionAda
     connect(): Sequelize | undefined {
         if (!this.getInstance()) {
             this.setInstance(new Sequelize("mydatabase", "myuser", "mypassword", {
-                host: "backend-mysql-1",
+                host: "lingversum-database",
                 dialect: "mysql"
             }))
         }
