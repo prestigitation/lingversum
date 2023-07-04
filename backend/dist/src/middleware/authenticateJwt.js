@@ -8,7 +8,7 @@ function authenticateJwt(request, response, next) {
     const authHeader = request.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null)
-        return response.sendStatus(401).redirect("/login");
+        return response.sendStatus(401);
     jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET, (err, user) => {
         console.log(err);
         if (err)

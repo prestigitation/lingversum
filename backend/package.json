@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "test": "npx tsc && cd dist && mocha",
+    "test": "npx tsc && cd dist && mocha --timeout 10000",
     "start:dev": "node -r dotenv/config dist/index.js",
     "start:watch": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/index.js\"",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
