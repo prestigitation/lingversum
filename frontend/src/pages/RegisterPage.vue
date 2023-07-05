@@ -54,6 +54,8 @@ import useNotifications from "@/composables/useNotifications";
 
 import FormErrorMessage from "@/components/ui/FormErrorMessage.vue";
 import useI18nComposable from "@/composables/useI18nComposable";
+import { login } from "@/composables/useAuth";
+import { AxiosResponse } from "axios";
 
 const axios = useInstance();
 const router = useRouter();
@@ -83,9 +85,11 @@ async function onSubmit(values: any) {
       email: values.email,
       password: values.password,
     })
-    .then(() => {
+    .then((response: AxiosResponse) => {
       useSuccessHandler(useI18nComposable.$t("USER.REGISTER.SUCCESS").value);
-      return router.push("/login");
+      login(response);
+      router.push({ name: "profile" });
+      return;
     });
 }
 </script>

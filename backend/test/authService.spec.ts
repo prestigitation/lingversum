@@ -9,6 +9,8 @@ import authRepository from "../src/repositories/authRepository";
 import authService from "../src/services/authService";
 import supertest from "supertest";
 import { expect } from "chai";
+import User from "../models/user.model";
+import sequelizeConnectionAdapter from "../src/repositories/adapters/sequelizeConnectionAdapter";
 
 const app = express();
 
@@ -24,29 +26,28 @@ describe("AuthService", () => {
         process.env.NODE_ENV = "test";
         process.env.TOKEN_SECRET="test";
     })
+    beforeEach(() => {
+        Container.get(sequelizeConnectionAdapter).connect()?.truncate();
+    })
     describe("works correctly with token", () => {
         test("route should be protected by the auth token", (done) => {
             supertest(app)
                 .post("/authorized")
                 .expect(401, done);
         })
-       /*test("should invalidate token after expire date", function () {
-            let self = this;
-            return new Promise(async function(resolve) {
-                let user = await Container.get(authRepository).createUser({
+       test("should invalidate token after expire date", function (done) {
+                let user = User.build({
                     email: randEmail(),
                     password: randPassword(),
                     name: randUserName()
-                })
+                });
                 let token: string = Container.get(authService).generateToken(user.get(), "2s");
-                self.timeout(2100);
+                this.timeout(2100);
                 supertest(app)
                     .post("/authorized")
                     .set("Authorization", token)
-                    .expect(200);
-                resolve(true);
-            })
-        })*/
+                    .expect(401, done);
+        })
         
         test("should access user to private routes when valid", async () => {
                 let user = await Container.get(authRepository).createUser({
@@ -60,8 +61,7 @@ describe("AuthService", () => {
                 });
         })
         test("should not access user to private routes when invalid", (done) => {
-            supertest(app).post("/authorized").set("authorization", "invalid_token").expect(401);
-            done();
+            supertest(app).post("/authorized").set("authorization", "invalid_token").expect(401, done);
         })
     })
 })

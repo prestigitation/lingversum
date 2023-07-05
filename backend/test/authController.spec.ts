@@ -74,7 +74,7 @@ describe("AuthController", () => {
          })
          test("should not pass if user with given email already exists", async () => {
             let existingEmail = randEmail();
-            await Container.get(authRepository).createUser({ email: existingEmail, name: randUserName(), password: randPassword() });
+            (await Container.get(authRepository).createUser({ email: existingEmail, name: randUserName(), password: randPassword() }));
             supertestInstance.post("/register").send({
                email: existingEmail,
                name: randUserName(),
@@ -89,7 +89,6 @@ describe("AuthController", () => {
                name: randUserName(), 
                password: randPassword()
             });
-
             supertestInstance.post("/login").send({
                email: user.get("email"),
                password: user.get("password")
@@ -110,6 +109,7 @@ describe("AuthController", () => {
                name: randUserName(),
                password: randPassword()
             })
+
             supertestInstance.post("/login").send({
                email: user.get("email"),
                password: randPassword()

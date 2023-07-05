@@ -38,16 +38,19 @@
 <script lang="ts" setup>
 import { APP_NAME } from "@/types/constants/app.constants";
 import { Input, Button } from "vexip-ui";
-import { RouterLink, routerKey, useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 import { Field, useForm, Form } from "vee-validate";
 import { useInstance } from "../composables/useAxiosClient";
 import useNotications from "../composables/useNotifications";
 import FormErrorMessage from "@/components/ui/FormErrorMessage.vue";
-
-const { useSuccessHandler, useInvalidInputHandler } = useNotications();
+import { AxiosResponse } from "axios";
+import { login } from "@/composables/useAuth";
+import jwt_decode from "jwt-decode";
+const { useInvalidInputHandler } = useNotications();
 const axios = useInstance();
+const router = useRouter();
 
 const validationSchema = toTypedSchema(
   z.object({
@@ -65,7 +68,13 @@ const email = defineInputBinds("email");
 const password = defineInputBinds("password");
 
 async function onSubmit(values: any) {
-  await axios.post("login", { email: values.email, password: values.password });
+  await axios
+    .post("login", { email: values.email, password: values.password })
+    .then((response: AxiosResponse) => {
+      login(response);
+      router.push({ name: "profile" });
+      return;
+    });
 }
 </script>
 <style lang="scss" scoped src="../styles/auth.scss"></style>

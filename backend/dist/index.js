@@ -37,9 +37,10 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 require("dotenv").config();
 const app = (0, express_1.default)();
 const root = new express_route_grouping_1.default('/', (0, express_1.Router)());
+const AuthController = typedi_1.default.get(authController_1.default);
 root.group('/api/v1', (router) => {
-    router.post("/login", typedi_1.default.get(authController_1.default).login);
-    router.post("/register", typedi_1.default.get(authController_1.default).register);
+    router.post("/login", AuthController.login.bind(AuthController));
+    router.post("/register", AuthController.register.bind(AuthController));
 });
 app.use(cors());
 app.use((0, cookie_parser_1.default)());

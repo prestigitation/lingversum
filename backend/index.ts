@@ -14,9 +14,11 @@ require("dotenv").config();
 const app: Express = express();
 const root = new RouteGroup('/', Router());
 
+const AuthController = Container.get(authController);
+
 root.group('/api/v1', (router: Router) => {
-    router.post("/login", Container.get(authController).login as any);
-    router.post("/register", Container.get(authController).register as any);
+    router.post("/login", AuthController.login.bind(AuthController) as any);
+    router.post("/register", AuthController.register.bind(AuthController) as any);
 });
 
 app.use(cors())

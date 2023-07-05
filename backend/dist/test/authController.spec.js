@@ -83,7 +83,7 @@ describe("AuthController", () => {
         });
         (0, mocha_1.test)("should not pass if user with given email already exists", () => __awaiter(void 0, void 0, void 0, function* () {
             let existingEmail = (0, falso_1.randEmail)();
-            yield typedi_1.default.get(authRepository_1.default).createUser({ email: existingEmail, name: (0, falso_1.randUserName)(), password: (0, falso_1.randPassword)() });
+            (yield typedi_1.default.get(authRepository_1.default).createUser({ email: existingEmail, name: (0, falso_1.randUserName)(), password: (0, falso_1.randPassword)() }));
             supertestInstance.post("/register").send({
                 email: existingEmail,
                 name: (0, falso_1.randUserName)(),

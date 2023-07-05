@@ -5,5 +5,6 @@ export default () => ({
     email: undefined,
     token: undefined,
     name: undefined,
+    profile: {},
   },
 });

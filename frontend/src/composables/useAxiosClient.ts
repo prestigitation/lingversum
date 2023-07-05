@@ -1,7 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import useNotifications from "./useNotifications";
 import { useI18n } from "vue-composable";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const { useErrorHandler } = useNotifications();
 
 export function useInstance() {
@@ -22,16 +24,16 @@ export function useInstance() {
     },
     (error: AxiosError) => {
       const code = error?.response?.status?.toString();
-      if (code && code[0] === "4" && error.message && code !== "403") {
+      if (code && code[0] === "4" && error.message && code !== "401") {
         // if response came from server and related to HTTP response codes
         useErrorHandler(error.message);
         return;
+      } else if (code === "401") {
+        router.push("/login");
       } else {
-        console.log(error.code);
         useErrorHandler(i18n.$t("ERROR.SERVER_ERROR").value);
         return;
       }
-      return Promise.reject(error);
     }
   );
 

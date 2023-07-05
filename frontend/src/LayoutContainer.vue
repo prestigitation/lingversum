@@ -11,9 +11,8 @@ import LayoutHeader from "./components/ui/LayoutHeader.vue";
 
 import { setI18n } from "vue-composable";
 import en from "@/locales/en.json";
-import { provide } from "vue";
 
-const i18n = setI18n({
+setI18n({
   locale: "en",
   messages: {
     en,
