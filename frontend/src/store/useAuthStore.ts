@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
-import state from "./auth/state";
 import UserInterface from "@/interfaces/userInterface";
 import { computed, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
+import { useInstance } from "@/composables/useAxiosClient";
+import { AxiosResponse } from "axios";
+const http = useInstance();
 
 export const useAuthStore = defineStore(
   "auth",
@@ -16,9 +18,7 @@ export const useAuthStore = defineStore(
       })
     );
 
-    const getUser = computed(() => {
-      return user;
-    });
+    const getUser = computed(() => user);
     const getUserEmail = computed(() => user.value?.email);
     const getUserToken = computed(() => user?.value?.token);
     const getUserName = computed(() => user?.value?.name);
@@ -35,6 +35,12 @@ export const useAuthStore = defineStore(
     };
     const setUserProfile = (profile: object) => {
       user.value.profile = profile;
+    };
+
+    const fetchUserProfile = async () => {
+      return await http.get("users/profile").then((response: AxiosResponse) => {
+        setUserProfile(response.data);
+      });
     };
 
     const resetUser = () => {
@@ -57,6 +63,8 @@ export const useAuthStore = defineStore(
       setUserToken,
       setUserName,
       setUserProfile,
+
+      fetchUserProfile,
 
       resetUser,
     };

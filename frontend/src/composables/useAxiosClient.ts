@@ -24,9 +24,10 @@ export function useInstance() {
     },
     (error: AxiosError) => {
       const code = error?.response?.status?.toString();
-      if (code && code[0] === "4" && error.message && code !== "401") {
+      const responseData = error?.response?.data as { message: string };
+      if (code && code[0] === "4" && responseData.message && code !== "401") {
         // if response came from server and related to HTTP response codes
-        useErrorHandler(error.message);
+        useErrorHandler(responseData.message);
         return;
       } else if (code === "401") {
         router.push("/login");

@@ -51,12 +51,13 @@ const authService_1 = __importDefault(require("../services/authService"));
 const userLoginValidator_1 = __importDefault(require("../validators/user/userLoginValidator"));
 const authRepository_1 = __importDefault(require("../repositories/authRepository"));
 const baseController_1 = __importDefault(require("./baseController"));
+const profile_model_1 = __importDefault(require("../../models/profile.model"));
 let authController = class authController extends baseController_1.default {
     constructor() {
         super();
     }
     login(request, response) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             const service = typedi_1.default.get(authService_1.default);
             const { email, password } = request.body;
@@ -81,32 +82,33 @@ let authController = class authController extends baseController_1.default {
                     }
                 }
                 else {
-                    console.log((_b = this.i18n) === null || _b === void 0 ? void 0 : _b.__("USER.NOT_FOUND"));
-                    return response.status(400).send({ message: (_c = this.getI18N()) === null || _c === void 0 ? void 0 : _c.__("USER.NOT_FOUND") });
+                    return response.status(400).send({ message: (_b = this.getI18N()) === null || _b === void 0 ? void 0 : _b.__("USER.NOT_FOUND") });
                 }
             }
             else {
-                return response.status(422).send({ message: (_d = this.getI18N()) === null || _d === void 0 ? void 0 : _d.__("USER.NOT_VALIDATED") });
+                return response.status(422).send({ message: (_c = this.getI18N()) === null || _c === void 0 ? void 0 : _c.__("USER.NOT_VALIDATED") });
             }
         });
     }
     register(request, response) {
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
-            const { email, password, name } = request.body;
-            const repository = new authRepository_1.default();
-            yield user_model_1.default.findOne({
-                where: {
-                    email
-                }
-            }).then((user) => __awaiter(this, void 0, void 0, function* () {
-                var _a, _b;
+            try {
+                const { email, password, name } = request.body;
+                const repository = new authRepository_1.default();
+                const user = yield user_model_1.default.findOne({
+                    where: {
+                        email
+                    }
+                });
                 if (user) {
                     return response.status(409).send((_a = this.getI18N()) === null || _a === void 0 ? void 0 : _a.__("USER.ALREADY_EXISTS"));
                 }
                 else {
                     let validator = (0, userRegisterValidator_1.default)(request.body);
                     if (validator.success) {
-                        const user = yield repository.createUser({ name, email, password });
+                        const profile = yield profile_model_1.default.create();
+                        const user = yield repository.createUser({ name, email, password, profileId: profile.getDataValue("id") });
                         user.save();
                         return response.sendStatus(201);
                     }
@@ -114,10 +116,11 @@ let authController = class authController extends baseController_1.default {
                         return response.status(422).send({ message: (_b = this.getI18N()) === null || _b === void 0 ? void 0 : _b.__("USER.NOT_VALIDATED") });
                     }
                 }
-            })).catch((e) => {
-                var _a;
-                return response.status(500).send({ message: (_a = this.getI18N()) === null || _a === void 0 ? void 0 : _a.__("ERROR.SERVER_ERROR") });
-            });
+            }
+            catch (err) {
+                console.log(err);
+                return response.status(500).send({ message: (_c = this.getI18N()) === null || _c === void 0 ? void 0 : _c.__("ERROR.SERVER_ERROR") });
+            }
         });
     }
 };

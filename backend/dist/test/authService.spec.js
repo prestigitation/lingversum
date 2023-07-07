@@ -61,7 +61,8 @@ describe("AuthService", () => {
             let user = yield typedi_1.default.get(authRepository_1.default).createUser({
                 email: (0, falso_1.randEmail)(),
                 password: (0, falso_1.randPassword)(),
-                name: (0, falso_1.randUserName)()
+                name: (0, falso_1.randUserName)(),
+                profileId: (0, falso_1.randNumber)()
             });
             let token = typedi_1.default.get(authService_1.default).generateToken(user.get());
             (0, supertest_1.default)(app).post("/authorized").set("authorization", "Bearer " + token).end((error, response) => {

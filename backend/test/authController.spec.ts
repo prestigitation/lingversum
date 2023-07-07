@@ -1,6 +1,6 @@
 let server = require("../index");
 
-import { randEmail, randPassword, randUserName } from "@ngneat/falso";
+import { randEmail, randNumber, randPassword, randUserName } from "@ngneat/falso";
 import { test } from "mocha"
 import { expect } from "chai";
 import Container from "typedi";
@@ -74,7 +74,7 @@ describe("AuthController", () => {
          })
          test("should not pass if user with given email already exists", async () => {
             let existingEmail = randEmail();
-            (await Container.get(authRepository).createUser({ email: existingEmail, name: randUserName(), password: randPassword() }));
+            (await Container.get(authRepository).createUser({ email: existingEmail, name: randUserName(), password: randPassword(), profileId: randNumber() }));
             supertestInstance.post("/register").send({
                email: existingEmail,
                name: randUserName(),
@@ -87,7 +87,8 @@ describe("AuthController", () => {
             let user = await Container.get(authRepository).createUser({
                email: randEmail(), 
                name: randUserName(), 
-               password: randPassword()
+               password: randPassword(),
+               profileId: randNumber()
             });
             supertestInstance.post("/login").send({
                email: user.get("email"),
@@ -107,7 +108,8 @@ describe("AuthController", () => {
             let user = await Container.get(authRepository).createUser({
                email: randEmail(),
                name: randUserName(),
-               password: randPassword()
+               password: randPassword(),
+               profileId: randNumber()
             })
 
             supertestInstance.post("/login").send({

@@ -71,9 +71,11 @@ async function onSubmit(values: any) {
   await axios
     .post("login", { email: values.email, password: values.password })
     .then((response: AxiosResponse) => {
-      login(response);
-      router.push({ name: "profile" });
-      return;
+      if (response) {
+        login(response);
+        router.push({ name: "profile" });
+        return;
+      }
     });
 }
 </script>

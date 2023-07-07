@@ -6,31 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = __importDefault(require("typedi"));
 const database_1 = __importDefault(require("../config/database"));
 const sequelize_1 = require("sequelize");
-const profile_model_1 = __importDefault(require("./profile.model"));
 const sequelize = typedi_1.default.get(database_1.default).getInstance();
-const User = sequelize.define("Users", {
+const Language = sequelize.define("Languages", {
     id: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.NUMBER,
         autoIncrement: true,
         primaryKey: true
     },
     name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        type: sequelize_1.DataTypes.STRING
     },
-    password: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
-    profileId: {
-        type: sequelize_1.DataTypes.INTEGER,
-    },
-    email: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+    imageLink: {
+        type: sequelize_1.DataTypes.STRING
     }
 }, {
-    tableName: "Users"
+    tableName: "Languages"
 });
-User.hasOne(profile_model_1.default);
-exports.default = User;
+exports.default = Language;

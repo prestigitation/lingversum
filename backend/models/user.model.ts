@@ -1,12 +1,14 @@
 import Container from "typedi"
 import sequelizeConnection from "../config/database"
 import { DataTypes } from "sequelize";
+import Profile from "./profile.model";
+import profileAdditionalLanguages from "./profileAdditionalLanguage.model";
 
 const sequelize = Container.get(sequelizeConnection).getInstance();
 
 const User = sequelize!.define("Users", {
     id: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
@@ -18,6 +20,9 @@ const User = sequelize!.define("Users", {
       type: DataTypes.STRING,
       allowNull: false
     },
+    profileId: {
+      type: DataTypes.INTEGER,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false
@@ -25,5 +30,7 @@ const User = sequelize!.define("Users", {
 }, {
   tableName: "Users"
 })
+
+User.hasOne(Profile);
 
 export default User;

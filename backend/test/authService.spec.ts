@@ -3,7 +3,7 @@ let server = require("./mocks/authTestServer");
 import { test } from "mocha"
 import express, { Request, Response } from "express";
 import authenticateJwt from "../src/middleware/authenticateJwt";
-import { randEmail, randPassword, randUserName } from "@ngneat/falso";
+import { randEmail, randNumber, randPassword, randUserName } from "@ngneat/falso";
 import Container from "typedi";
 import authRepository from "../src/repositories/authRepository";
 import authService from "../src/services/authService";
@@ -53,7 +53,8 @@ describe("AuthService", () => {
                 let user = await Container.get(authRepository).createUser({
                     email: randEmail(),
                     password: randPassword(),
-                    name: randUserName()
+                    name: randUserName(),
+                    profileId: randNumber()
                 })
                 let token: string = Container.get(authService).generateToken(user.get());
                 supertest(app).post("/authorized").set("authorization", "Bearer " + token).end((error: Error, response: supertest.Response) => {
