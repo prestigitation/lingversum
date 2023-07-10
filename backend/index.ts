@@ -9,6 +9,7 @@ const cors = require("cors");
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import userController from './src/controllers/userController';
+import authenticateJwt from './src/middleware/authenticateJwt';
 
 require("dotenv").config();
 
@@ -22,8 +23,10 @@ root.group('api/v1', (api) => {
     api.post("login", AuthController.login.bind(AuthController) as any);
     api.post("register", AuthController.register.bind(AuthController) as any);
 
-    api.group("users", (router: Router) => {
-        router.get("profile", UserController.getProfile.bind(AuthController));
+    api.group("/users", (users) => {
+       users.group("/profile", (profile) => {
+            profile.get("/", authenticateJwt as any, UserController.getProfile.bind(UserController) as any);
+        });
     });
 });
 

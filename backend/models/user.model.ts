@@ -31,6 +31,6 @@ const User = sequelize!.define("Users", {
   tableName: "Users"
 })
 
-User.hasOne(Profile);
+User.belongsTo(Profile);
 
 export default User;

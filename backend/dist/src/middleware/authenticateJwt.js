@@ -10,7 +10,6 @@ function authenticateJwt(request, response, next) {
     if (token == null)
         return response.sendStatus(401);
     jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        console.log(err);
         if (err)
             return response.sendStatus(403);
         request.user = user;

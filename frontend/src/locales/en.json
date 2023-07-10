@@ -11,6 +11,23 @@
             "TITLE": "Success"
         }
     },
+    "PROFILE": {
+        "STEPS": {
+            "INITIALS": {
+                "TITLE": "Your initials",
+                "ERROR": {
+                    "TITLE": "Initials",
+                    "TEXT": "We couldn`t proceed with your initials data. Please check all fields and try again"
+                },
+                "MAIN_LANGUAGE": {
+                    "PLACEHOLDER": "Your main language"
+                }
+            }
+        },
+        "EMPTY": {
+            "TITLE": "Let`s add some information to your profile!"
+        }
+    },
     "ERROR": {
         "BASE": {
             "TITLE": "Error"

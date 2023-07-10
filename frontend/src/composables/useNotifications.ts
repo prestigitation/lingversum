@@ -27,8 +27,18 @@ const useInvalidInputHandler = () => {
   });
 };
 
+const useStepWizardErrorHandler = () => {
+  notify({
+    title: i18n?.$t("ERROR.BASE.TITLE").value,
+    text: i18n?.$t("ERROR.INVALID_INPUT").value,
+    type: "error",
+  });
+  PROFILE.STEPS.INITIALS.ERROR.TEXT;
+};
+
 export default () => ({
   useSuccessHandler,
   useErrorHandler,
   useInvalidInputHandler,
+  useStepWizardErrorHandler,
 });

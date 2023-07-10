@@ -2,7 +2,7 @@
   <div class="h-full flex flex-col items-center justify-center">
     <span class="text-xl mb-6 font-bold">Register</span>
     <Form
-      class="flex !flex-col w-[20%] !gap-4 !items-center"
+      class="flex !flex-col w-[80%] xl:w-[20%] !gap-4 !items-center"
       :validation-schema="validationSchema"
       @submit="onSubmit"
       @invalid-submit="useInvalidInputHandler"

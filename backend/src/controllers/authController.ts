@@ -7,6 +7,7 @@ import userLoginValidator from "../validators/user/userLoginValidator";
 import authRepository from "../repositories/authRepository";
 import baseController from "./baseController";
 import Profile from "../../models/profile.model";
+import userInfoInToken from "../types/userInfoInToken";
 
 
 @Service()
@@ -27,7 +28,7 @@ export default class authController extends baseController {
                 });
                 if (user) {
                     if (service.matchHash(password, user?.getDataValue("password"))) {
-                        let userInfo = {
+                        let userInfo = <userInfoInToken> {
                             name: user?.getDataValue("name"),
                             email
                         }

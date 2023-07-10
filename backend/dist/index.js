@@ -35,6 +35,7 @@ const cors = require("cors");
 const body_parser_1 = __importDefault(require("body-parser"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const userController_1 = __importDefault(require("./src/controllers/userController"));
+const authenticateJwt_1 = __importDefault(require("./src/middleware/authenticateJwt"));
 require("dotenv").config();
 const app = (0, express_1.default)();
 const root = new express_route_grouping_1.default('/', (0, express_1.Router)());
@@ -43,8 +44,10 @@ const UserController = typedi_1.default.get(userController_1.default);
 root.group('api/v1', (api) => {
     api.post("login", AuthController.login.bind(AuthController));
     api.post("register", AuthController.register.bind(AuthController));
-    api.group("users", (router) => {
-        router.get("profile", UserController.getProfile.bind(AuthController));
+    api.group("/users", (users) => {
+        users.group("/profile", (profile) => {
+            profile.get("/", authenticateJwt_1.default, UserController.getProfile.bind(UserController));
+        });
     });
 });
 app.use(cors());

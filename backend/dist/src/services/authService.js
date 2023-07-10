@@ -19,7 +19,7 @@ let authService = class authService {
         this.dotenv = require('dotenv');
         this.jwt = require('jsonwebtoken');
     }
-    generateToken(info, expiresIn = "1800s") {
+    generateToken(info, expiresIn = "604800s") {
         return this.jwt.sign(info, process.env.TOKEN_SECRET, { expiresIn });
     }
     matchHash(rawString, hashedString) {

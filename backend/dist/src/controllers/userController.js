@@ -23,12 +23,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = require("typedi");
 const baseController_1 = __importDefault(require("./baseController"));
+const user_model_1 = __importDefault(require("../../models/user.model"));
+const profile_model_1 = __importDefault(require("../../models/profile.model"));
 let userController = class userController extends baseController_1.default {
     constructor() {
         super();
     }
-    getProfile() {
+    getProfile(request, response) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            const user = yield user_model_1.default.findOne({
+                where: {
+                    email: (_a = request === null || request === void 0 ? void 0 : request.user) === null || _a === void 0 ? void 0 : _a.email
+                }
+            });
+            const profile = yield profile_model_1.default.findOne({
+                where: {
+                    id: user === null || user === void 0 ? void 0 : user.getDataValue("profileId")
+                }
+            });
+            if (profile) {
+                return response.send(profile);
+            }
+            else {
+                return response.json({});
+            }
         });
     }
 };

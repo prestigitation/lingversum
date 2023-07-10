@@ -1,13 +1,10 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { AxiosResponse } from "axios";
 import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 
 export function authenticated() {
   const { getUserToken } = storeToRefs(useAuthStore());
-  return !!getUserToken;
+  return !!getUserToken.value;
 }
 
 export function login(response: AxiosResponse) {

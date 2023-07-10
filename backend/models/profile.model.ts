@@ -3,6 +3,7 @@ import sequelizeConnection from "../config/database"
 import { DataTypes } from "sequelize";
 import profileAdditionalLanguages from "./profileAdditionalLanguage.model";
 import profileDesiredLanguages from "./profileDesiredLanguage.model";
+import User from "./user.model";
 
 const sequelize = Container.get(sequelizeConnection).getInstance();
 
