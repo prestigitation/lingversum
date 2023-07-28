@@ -11,17 +11,35 @@
             "TITLE": "Success"
         }
     },
+    "INPUT": {
+        "LANGUAGE": {
+            "OPTION": "Your native language or language you speak the most"
+        }
+    },
     "PROFILE": {
         "STEPS": {
             "INITIALS": {
                 "TITLE": "Your initials",
                 "ERROR": {
-                    "TITLE": "Initials",
+                    "TITLE": "Initials Error",
                     "TEXT": "We couldn`t proceed with your initials data. Please check all fields and try again"
                 },
                 "MAIN_LANGUAGE": {
-                    "PLACEHOLDER": "Your main language"
+                    "PLACEHOLDER": "Your native language / language you speak the most"
+                },
+                "COUNTRY": {
+                    "PLACEHOLDER": "Your country"
+                },
+                "CITY": {
+                    "PLACEHOLDER": "City"
+                },
+                "AVATAR": {
+                    "TITLE": "Upload your avatar",
+                    "ERROR": "You must select a png/jpeg picture, which will be your avatar"
                 }
+            },
+            "LANG_DATA": {
+                "TITLE": "Your language skills and preferences"
             }
         },
         "EMPTY": {

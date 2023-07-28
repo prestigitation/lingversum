@@ -3,6 +3,7 @@
     <country-select
       :disablePlaceholder="true"
       :placeholder="placeholder"
+      :style="selectStyles"
       :modelValue="modelValue"
       @change="onChange"
       class="country_selector--picker vxp-input vxp-input-vars"
@@ -10,18 +11,20 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { computed, ref } from "vue";
+
 interface countrySelectorPropsInterface {
   placeholder: string;
   modelValue: any;
 }
-defineProps<countrySelectorPropsInterface>();
+const props = defineProps<countrySelectorPropsInterface>();
 const emit = defineEmits(["update:modelValue"]);
+const selectStyles = ref("color:lightgray !important;");
 const onChange = (event: Event) => {
   const target = event.target as EventTarget & { value: string };
-  console.log(target.value);
+  selectStyles.value = "color:rgb(73, 80, 87) !important;";
   emit("update:modelValue", target.value);
 };
-//emit('update:modelValue', $event.target.value)
 </script>
 <style lang="scss">
 .country_selector {
