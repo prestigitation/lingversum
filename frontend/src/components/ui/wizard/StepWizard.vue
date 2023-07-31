@@ -8,7 +8,7 @@
         <img
           v-show="avatar.value?.value"
           id="avatar"
-          :src="(avatar.value?.value as any)"
+          :src="avatar.value?.value"
           width="100"
           class="py-2 my-4 h-[100px] profile_step--avatar"
         />
@@ -48,16 +48,28 @@
       :before-change="handleBeforeValidateLangData"
       :title="i18n.$t('PROFILE.STEPS.LANG_DATA.TITLE').value"
     >
+      <span class="text-xl">{{
+        i18n.$t("PROFILE.STEPS.LANG_DATA.MAIN_LANGUAGE.TITLE").value
+      }}</span>
       <field name="mainLanguage">
         <language-selector
-          :modelValue="(mainLanguage.value.value as string)"
+          :modelValue="mainLanguage.value.value"
           @update:modelValue="mainLanguage.setValue($event)"
           :placeholder="
-            i18n.$t('PROFILE.STEPS.INITIALS.MAIN_LANGUAGE.PLACEHOLDER').value
+            i18n.$t('PROFILE.STEPS.LANG_DATA.MAIN_LANGUAGE.PLACEHOLDER').value
           "
         />
       </field>
       <form-error-message name="mainLanguage" />
+      <div class="mt-2 text-xl">
+        {{
+          i18n.$t("PROFILE.STEPS.LANG_DATA.ADDITIONAL_LANGUAGES.TITLE").value
+        }}
+      </div>
+      <country-select-slide-swiper
+        :modelValue="additionalLanguages.value.value"
+        @update:modelValue="additionalLanguages.setValue($event)"
+      />
     </tab-content>
     <tab-content />
   </form-wizard>
@@ -74,6 +86,8 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { ZodRawShape, z } from "zod";
 import useNotifications from "../../../composables/useNotifications";
 import useI18nComposable from "../../../composables/useI18nComposable";
+import CountrySelectSlideSwiper from "../CountrySelectSlideSwiper.vue";
+import swiperLanguage from "@/interfaces/swiperLanguage";
 
 const i18n = useI18nComposable;
 
@@ -90,6 +104,7 @@ const schemas = [
   },
   {
     mainLanguage: z.string().nonempty(),
+    additionalLanguages: z.string().array(),
   },
 ];
 
@@ -111,11 +126,17 @@ const form = useForm({
   validationSchema,
 });
 
-const age = useField("age");
-const mainLanguage = useField("mainLanguage");
-const avatar = useField("avatar");
-const country = useField("country");
-const city = useField("city");
+const age = useField<string>("age");
+const avatar = useField<string>("avatar");
+const country = useField<string>("country");
+const city = useField<string>("city");
+
+const mainLanguage = useField<string>("mainLanguage");
+const additionalLanguages = useField<swiperLanguage[]>(
+  "additionalLanguages",
+  {},
+  { initialValue: [] }
+);
 
 const validateInitials = async (): Promise<boolean> => {
   const { valid: avatarValid } = await avatar.validate();

@@ -12,6 +12,13 @@
         }
     },
     "INPUT": {
+        "COUNTRY_SELECTOR": {
+            "SWIPER": {
+                "EMPTY": {
+                    "LABEL": "Add language"
+                }
+            }
+        },
         "LANGUAGE": {
             "OPTION": "Your native language or language you speak the most"
         }
@@ -23,9 +30,6 @@
                 "ERROR": {
                     "TITLE": "Initials Error",
                     "TEXT": "We couldn`t proceed with your initials data. Please check all fields and try again"
-                },
-                "MAIN_LANGUAGE": {
-                    "PLACEHOLDER": "Your native language / language you speak the most"
                 },
                 "COUNTRY": {
                     "PLACEHOLDER": "Your country"
@@ -39,7 +43,14 @@
                 }
             },
             "LANG_DATA": {
-                "TITLE": "Your language skills and preferences"
+                "TITLE": "Your language skills and preferences",
+                "MAIN_LANGUAGE": {
+                    "PLACEHOLDER": "Your native language / language you speak the most",
+                    "TITLE": "Your main language"
+                },
+                "ADDITIONAL_LANGUAGES": {
+                    "TITLE": "Other languages experience"
+                }
             }
         },
         "EMPTY": {

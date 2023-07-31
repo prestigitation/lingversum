@@ -23,6 +23,7 @@ interface LanguageSelectorProps {
 }
 import useI18nComposable from "@/composables/useI18nComposable";
 import * as languages from "../../assets/data.json";
+import { getFlagEmoji } from "@/helpers/languageHelper";
 
 const props = defineProps<LanguageSelectorProps>();
 const emit = defineEmits(["update:modelValue"]);
@@ -32,11 +33,6 @@ const i18n = useI18nComposable;
 const handleLanguageChange = (e: any) => {
   emit("update:modelValue", e.target.value);
 };
-
-const getFlagEmoji = (countryCode: string) =>
-  String.fromCodePoint(
-    ...[...countryCode.toUpperCase()].map((x) => 0x1f1a5 + x.charCodeAt(0))
-  );
 
 const validLanguages = () => {
   return languages.filter((el) => el.demonym);
