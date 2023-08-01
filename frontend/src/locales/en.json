@@ -49,7 +49,9 @@
                     "TITLE": "Your main language"
                 },
                 "ADDITIONAL_LANGUAGES": {
-                    "TITLE": "Other languages experience"
+                    "TITLE": "Other languages experience",
+                    "LABEL": "Language",
+                    "PLACEHOLDER": "Select"
                 }
             }
         },

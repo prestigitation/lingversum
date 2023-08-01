@@ -1,14 +1,19 @@
 <template>
-  <div class="grid gap-y-4 xl:grid-cols-3 xl:gap-y-12 xl:mt-8">
+  <div class="slider_container">
     <slider-card
       v-for="(lang, i) in modelValue"
+      @update:percentage="changePercentage"
+      @update:language="changeLanguage"
       :key="i"
       :lang="lang"
       :i="i"
-      @update:percentage="changePercentage"
-      @update:language="changeLanguage"
+      :excludedLanguages="modelValue"
     />
-    <div v-if="languagesFilled" class="slider_wrapper" @click="addLanguage">
+    <div
+      v-if="languagesFilled"
+      class="slider_wrapper slider_wrapper--add"
+      @click="addLanguage"
+    >
       <div class="slider_empty--plus">+</div>
       <div>
         {{ i18n.$t("INPUT.COUNTRY_SELECTOR.SWIPER.EMPTY.LABEL").value }}
@@ -81,8 +86,20 @@ const addLanguage = () => {
       color: #a2a2a2;
     }
   }
+  &_container {
+    .slider_wrapper {
+      @apply max-w-[200px];
+    }
+    @apply grid gap-y-4 xl:gap-y-12 xl:mt-4 items-baseline;
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
   &_wrapper {
-    @apply flex flex-col justify-center mx-auto hover:cursor-pointer w-[100px] h-[100px] p-2 mt-2;
+    &--add,
+    &--empty {
+      @apply w-[100px] h-[100px];
+      align-self: normal;
+    }
+    @apply flex flex-col justify-center mx-auto hover:cursor-pointer p-2 mt-2;
     border: 1px dashed;
   }
 }

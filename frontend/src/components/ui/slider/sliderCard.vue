@@ -3,19 +3,26 @@
     :class="[
       'slider_wrapper',
       {
+        'slider_wrapper--empty': lang.langCode === '',
         '!p-0 !border-0': lang.langCode,
       },
     ]"
   >
-    <language-selector
-      v-if="lang.langCode === ''"
-      :modelValue="lang.langCode"
-      @update:modelValue="emit('update:language', i, $event)"
-      :placeholder="
-        i18n.$t('PROFILE.STEPS.LANG_DATA.MAIN_LANGUAGE.PLACEHOLDER').value
-      "
-    />
-    <div v-else>
+    <template v-if="lang.langCode === ''">
+      <span class="font-bold">{{
+        i18n.$t("PROFILE.STEPS.LANG_DATA.ADDITIONAL_LANGUAGES.LABEL").value
+      }}</span>
+      <language-selector
+        :modelValue="lang.langCode"
+        @update:modelValue="emit('update:language', i, $event)"
+        :placeholder="
+          i18n.$t('PROFILE.STEPS.LANG_DATA.ADDITIONAL_LANGUAGES.PLACEHOLDER')
+            .value
+        "
+        :excludedLanguages="excludedLanguages"
+      />
+    </template>
+    <div v-else class="flex flex-col items-center">
       <div
         :style="`background: white;opacity:.7;width:100px;height:${
           100 - lang.percent
@@ -24,33 +31,38 @@
       ></div>
       <img
         :src="getLanguageImage(lang.langCode)"
+        @dragstart.prevent
         @click="emit('update:percentage', $event, i)"
         @touchstart="handleTouchStart"
         @touchmove="handleTouchMove($event, i)"
         class="h-[100px] w-[100px]"
         style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
       />
-      <div class="mt-1">
+      <div class="font-bold mt-2">
+        {{ getLanguageFromLangCode(lang.langCode.toUpperCase()) }}
+      </div>
+      <div class="flex items-center gap-3">
         <span
-          class="text-red-500"
+          class="slider_button slider_button--decrement"
           @click="decrementPercentage(lang.percent, i)"
           @mousedown="handleMinusMouseDown(lang.percent, i)"
           @mouseup="handleMinusMouseUp"
           @mouseleave="handleMinusMouseUp"
           >-</span
         >
-        {{ getLanguageFromLangCode(lang.langCode.toUpperCase()) }}
         <span
-          class="text-green-500"
+          >{{ lang.percent }}% ({{
+            getLanguageQualification(lang.percent)
+          }})</span
+        >
+        <span
+          class="slider_button slider_button--increment"
           @click="incrementPercentage(lang.percent, i)"
           @mousedown="handlePlusMouseDown(lang.percent, i)"
           @mouseup="handlePlusMouseUp"
           @mouseleave="handlePlusMouseUp"
           >+</span
         >
-      </div>
-      <div>
-        {{ lang.percent }}% ({{ getLanguageQualification(lang.percent) }})
       </div>
     </div>
   </div>
@@ -66,6 +78,7 @@ import swiperLanguage from "@/interfaces/swiperLanguage";
 interface sliderCardProps {
   lang: swiperLanguage;
   i: number;
+  excludedLanguages?: swiperLanguage[];
 }
 const i18n = useI18nComposable;
 const props = defineProps<sliderCardProps>();
@@ -99,7 +112,7 @@ const handleTouchMove = (event: TouchEvent, i: number) => {
 };
 
 const decrementPercentage = (percent: number, i: number) => {
-  if (percent >= 1) {
+  if (percent > 0) {
     emit("update:percentage", "-", i);
   } else emit("update:percentage", 0, i);
 };
@@ -137,3 +150,26 @@ const getLanguageImage = (langCode: string): string => {
   return "https://flagcdn.com/w160/" + langCode + ".png";
 };
 </script>
+<style lang="scss" scoped>
+.slider {
+  &_button {
+    &-- {
+      &in,
+      &de {
+        &crement {
+          @apply w-6 h-6 inline-block;
+          border: 1px solid;
+          font-size: 1rem;
+          border-radius: 50px;
+        }
+      }
+      &increment {
+        @apply text-green-500;
+      }
+      &decrement {
+        @apply text-red-500;
+      }
+    }
+  }
+}
+</style>

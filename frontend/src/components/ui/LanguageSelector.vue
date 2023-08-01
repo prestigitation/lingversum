@@ -5,7 +5,7 @@
     :value="props.modelValue"
   >
     <option disabled value="">
-      {{ i18n.$t("INPUT.LANGUAGE.OPTION").value }}
+      {{ getSelectPlaceholder() }}
     </option>
     <option
       v-for="(lang, i) in validLanguages()"
@@ -18,12 +18,16 @@
   </select>
 </template>
 <script lang="ts" setup>
-interface LanguageSelectorProps {
-  modelValue: string;
-}
 import useI18nComposable from "@/composables/useI18nComposable";
 import * as languages from "../../assets/data.json";
 import { getFlagEmoji } from "@/helpers/languageHelper";
+import swiperLanguage from "@/interfaces/swiperLanguage";
+
+interface LanguageSelectorProps {
+  modelValue: string;
+  excludedLanguages?: swiperLanguage[];
+  placeholder: string;
+}
 
 const props = defineProps<LanguageSelectorProps>();
 const emit = defineEmits(["update:modelValue"]);
@@ -34,7 +38,19 @@ const handleLanguageChange = (e: any) => {
   emit("update:modelValue", e.target.value);
 };
 
+const getSelectPlaceholder = () =>
+  props.placeholder ?? i18n.$t("INPUT.LANGUAGE.OPTION").value;
+
 const validLanguages = () => {
-  return languages.filter((el) => el.demonym);
+  return languages.filter((el) => {
+    if (props.excludedLanguages?.length) {
+      return (
+        el.demonym &&
+        !props.excludedLanguages
+          .map((el) => el.langCode.toLowerCase())
+          .includes(el.alpha2Code.toLowerCase())
+      );
+    } else return el.demonym;
+  });
 };
 </script>
